@@ -1,3 +1,11 @@
 \section{Proposed Algorithms}
 
-This is proposed algorithms.
+We have mentioned that this project is going to construct a citation network that can recommend papers according to keywords or user reading history. Since the citation network is a graph structure, we will explore the new framework Graph X, which makes graph computation easier. The basic idea is to first extract features for each paper, then construct the graph of citation, compute the ``paper rank'', find frequent patterns, and at last recommend papers to a certain user according to the interest keyword and the reading history.
+
+So, there are three problems we are going to solve.
+
+\begin{itemize}
+	\item \textbf{Extracting Features}. We want features that can help to classify the papers according to keywords. Our idea is to implement an algorithm to first compute the TF/IDF and then collect keywords for each paper. We will also take the original author-generated keywords into consideration.
+	\item \textbf{Paper Ranking}. In this stage, we will first use Graph X to construct the citation network. Each node represents a paper while each directed edge represents a citation relation between two papers. After we constructed the graph, we will implement the page-rank algorithm to establish a paper ranking. 
+	\item \textbf{Paper Recommendation}. The goal of the project is to recommend papers to researchers according to their interest. There are two main features to represent users' interest. The first will be keywords. We will filter the papers according to the target keywords and construct a subgraph, then compute the paper rank accordingly. The second will be researcher's reading history. We will find common patterns such as diamond pattern to do recommendation. For example, when user have read paper A, and paper A cites both paper B and C, then paper B and C both cite paper D, then we will recommend paper D to the user if one hasn't read it. This is easy to understand because that paper D may be an important history work so the reader might want to read it. We will also consider other interesting patterns according to experiments.
+\end{itemize}
