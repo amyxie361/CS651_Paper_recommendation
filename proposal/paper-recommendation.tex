@@ -1,0 +1,67 @@
+\documentclass[sigconf]{acmart}
+
+\usepackage{booktabs} % For formal tables
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{ {./} }
+\usepackage{listings}
+\lstset{
+  columns=fullflexible,
+  frame=single,
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+
+% Copyright
+\setcopyright{none}
+%\setcopyright{acmcopyright}
+%\setcopyright{acmlicensed}
+%\setcopyright{rightsretained}
+%\setcopyright{usgov}
+%\setcopyright{usgovmixed}
+%\setcopyright{cagov}
+%\setcopyright{cagovmixed}
+
+\settopmatter{printacmref=false, printccs=false, printfolios=false}
+
+\begin{document}
+\title{Paper Recommendation}
+
+\author{Author1}
+\affiliation{%
+  \institution{University of Waterloo}
+}
+\email{author1@uwaterloo.ca}
+
+\author{Author2}
+\affiliation{%
+  \institution{University of Waterloo}
+}
+\email{author2@uwaterloo.ca}
+
+\author{Author3}
+\affiliation{%
+  \institution{University of Waterloo}
+}
+\email{author3@uwaterloo.ca}
+
+% removes footnote with conference information in first column
+\renewcommand\footnotetextcopyrightpermission[1]{}
+% removes running headers
+\pagestyle{plain}
+
+
+%\begin{abstract}
+%\end{abstract}
+
+\maketitle
+
+\input{introduction}
+\input{problem-description}
+\input{proposed-algo}
+\input{evaluation}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{bibliography}
+
+\end{document}
