@@ -1,3 +1,14 @@
 \section{Problem Description}
 
-We may filter the matching papers based on keywords that the user entered and apply PageRank on filtered papers. Furthermore, through the user’s list of reading history, we can also mine diamond patterns and make recommendations for the user.
+We will solve the problem of paper recommendation based on keywords, citation network and user reading history. 
+We will have an offline dataset consisting of paper citation relation and papers' content. \\
+For each query, we have the following as the input and output.\\
+\textbf{Input}, 
+
+Keywords: a list of strings, each string is an interested field, e.g. [``machine learning'', ``computer vision''].
+
+Reading history(optional): a list of papers, we use a unique id to represent each paper, e.g. [``journals/cacm/Szalay08''].\\
+\textbf{Output},
+
+Recommended papers: a list of papers, ranked in a descending recommending order.
+
