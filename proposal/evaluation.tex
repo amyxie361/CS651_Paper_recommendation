@@ -4,16 +4,15 @@ Although the focus of this project is to learn a new graph processing framework,
 %
 \subsection{Dataset} \label{dataset}
 %
-We are planning to use the DBLP Computer Science Bibliography dataset, which can be downloaded \href{http://www.rdfhdt.org/datasets/}{here}. %yqxie: Why I can't see the href in pdf?
+We are planning to use the DBLP Computer Science Bibliography dataset, which can be downloaded \href{https://dblp.uni-trier.de/xml/}{\underline{here}}.
 %
-The dataset is an RDF graph with 55 million triples.
+The raw dataset is in XML format, and we will convert it into a graph structure.
 %
 Since our project includes a keyword filtering feature, we are also planning to crawl the paper contents for text processing and analysis.
 %
-We will use the provided <ee> link to find the original entry page of each paper, and then clean up to obtain the abstract.
+For each paper in the DBLP data, a link to the entry page of the paper has been provided.
 %
-However, the feasibility of crawling papers is to be determined.
-%In the case that crawling papers is not feasible, for the purpose of the project, we will manually download and transform some paper contents to a format that can be easily processed.
+We can crawl the contents of the entry page and obtain the abstract as an offline dataset for text processing.
 %
 For the feature that is based on the user reading histories, we plan to use (1) our own reading histories, and (2) synthetic histories.
 %
@@ -21,9 +20,8 @@ For the feature that is based on the user reading histories, we plan to use (1) 
 %
 The evaluation methodologies for both keyword-filtering and reading-hisotry recommendation features are similar.
 %
-Since evaluating the effectiveness of the recommendations by automatic testing is challenging, we decide to evaluate our results manually.
+Since evaluating the effectiveness of the recommendations by automatic testing is challenging, one way to evaluate our results is manual evaluation.
 %
-% yqxie: an idea can be use the citation number for a paper to be it's labeled score?
 We are going to perform our proposed algorithms on the DBLP dataset described in Section \ref{dataset}.
 %
 For keyword-filtering recommendation, a keyword from a list of randomly generated keywords is going to be an input.
@@ -32,3 +30,9 @@ For reading-history recommendation, a reading list is going to be an input.
 %
 Then, we manually evaluate how relevant the results are to the input keyword or reading history, respectively.
 %
+
+The other way to evaluate our results is based on the number of citations of a paper.
+%
+We can evaluate our results by checking if the recommended papers are popular/important (i.e. large number of citations).
+%
+The recommendations are effective if they are among the most-cited papers.
