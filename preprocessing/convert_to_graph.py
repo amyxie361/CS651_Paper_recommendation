@@ -1,4 +1,6 @@
-with open('./citation-acm-cleaned.txt', 'r') as fp:
+import sys
+
+with open(sys.argv[1], 'r') as fp:
     index = ''
     dest_vertices = []
     for line in fp:

@@ -1,4 +1,6 @@
-with open('./citation-acm-cleaned.txt', 'r') as fp:
+import sys
+
+with open(sys.argv[1], 'r') as fp:
     index = ''
     abstract_start = False
     for line in fp:

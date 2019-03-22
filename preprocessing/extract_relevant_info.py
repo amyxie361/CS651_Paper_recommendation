@@ -1,3 +1,5 @@
+import sys
+
 ids = {}
 paper_id = 1
 index = ''
@@ -11,8 +13,7 @@ def add_to_id_mapping(index):
         paper_id += 1
 
 
-with open('./citation-acm-v8.txt', 'r') as fp:
-    abstract_start = False
+with open(sys.argv[1], 'r') as fp:
     for line in fp:
         if line.startswith("#@") or line.startswith("#t") or line.startswith("#c"):
             continue
