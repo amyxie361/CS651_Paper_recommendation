@@ -1,0 +1,8 @@
+#!/bin/bash
+
+spark-submit --class ca.uwaterloo.cs451.tfidf.TFIDF \
+  --deploy-mode client \
+  --num-executors 4 --executor-cores 4 --executor-memory 24G --driver-memory 2g \
+  target/paper-rec-1.0.jar \
+  --input data/acm-abstract.csv \
+  --output term2papers
