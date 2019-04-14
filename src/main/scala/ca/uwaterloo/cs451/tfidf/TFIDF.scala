@@ -72,14 +72,21 @@ object TFIDF extends Tokenizer {
         (paperId, List((term, tfidf)))
       })
       .reduceByKey(_ ::: _)
-      // result format of this map: (paper_id, list_of_top_5_terms_in_this_paper)
-      .map(tuple => (tuple._1, tuple._2.sortWith(_._2 > _._2).take(5).map(_._1).toList))
+      // result format of this map: (paper_id, list_of_top_10_terms_in_this_paper)
+      .map(tuple => (tuple._1, tuple._2.sortWith(_._2 > _._2).take(10).map(_._1).toList))
       // finally, we reverse our index to be: term -> list_of_papers
       .flatMap(tuple => {
         val paperId = tuple._1
         tuple._2.map(term => (term, List(paperId))).toList
       })
       .reduceByKey(_ ::: _)
+      .flatMap(tuple => {
+        if (tuple._2.length > 1) {
+          List(tuple)
+        } else {
+          List()
+        }
+      })
 
       term2papers.saveAsTextFile(args.output())
   }
