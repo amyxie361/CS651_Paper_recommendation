@@ -1,0 +1,71 @@
+\documentclass[sigconf]{acmart}
+
+\usepackage{booktabs} % For formal tables
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{ {./} }
+\usepackage{listings}
+\lstset{
+  columns=fullflexible,
+  frame=single,
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+
+% Copyright
+\setcopyright{none}
+%\setcopyright{acmcopyright}
+%\setcopyright{acmlicensed}
+%\setcopyright{rightsretained}
+%\setcopyright{usgov}
+%\setcopyright{usgovmixed}
+%\setcopyright{cagov}
+%\setcopyright{cagovmixed}
+
+\settopmatter{printacmref=false, printccs=false, printfolios=false}
+
+\begin{document}
+\title{Paper Recommendation using GraphX}
+
+\author{Jeremy Chen}
+\affiliation{%
+  \institution{University of Waterloo}
+}
+\email{jeremy.chen@uwaterloo.ca}
+
+\author{Junyi Zhang}
+\affiliation{%
+  \institution{University of Waterloo}
+}
+\email{j823zhan@uwaterloo.ca}
+
+\author{Yuqing Xie}
+\affiliation{%
+  \institution{University of Waterloo}
+}
+\email{yuqing.xie@uwaterloo.ca}
+
+% removes footnote with conference information in first column
+\renewcommand\footnotetextcopyrightpermission[1]{}
+% removes running headers
+\pagestyle{plain}
+
+
+\begin{abstract}
+This is abstract
+\end{abstract}
+
+\maketitle
+
+\input{introduction}
+\input{related-work}
+\input{problem-description}
+\input{framework-algo}
+%\input{proposed-algo}
+\input{evaluation}
+\input{conclusion}
+
+%\bibliographystyle{ACM-Reference-Format}
+%\bibliography{bibliography}
+
+\end{document}
