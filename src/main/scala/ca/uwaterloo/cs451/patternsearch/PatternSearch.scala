@@ -52,14 +52,20 @@ object PatternSearch {
     )
     val onefilteredGraph = Graph(
       onestepGraph.vertices
-        .filter{ case (id, attr) => attr > 2.0 }
-        .map{ case (id, attr) => (id, 1.0)}, onestepGraph.edges)
+//        .filter{ case (id, attr) => attr > 2.0 }
+        .map{ case (id, attr) => {
+          if (attr > 2.0) (id, (1.0, 0.0))
+          else (id, (0.0, 0.0))
+        }}, onestepGraph.edges)
 
-    val vprog2 = (id: VertexId, attr: Double, msgSum: Double) => {
-      attr + msgSum
+    val vprog2 = (id: VertexId, attr: (Double, Double), msgSum: Double) => {
+      if (attr._1 > 0.0) (attr._1, 3.0)
+      else if (msgSum > 1.0) (attr._1, 2.0)
+      else if (msgSum > 0.0) (attr._1, 1.0)
+      else (attr._1, 0.0)
     }
-    val sendMessage2 = (edge: EdgeTriplet[Double, Int]) => {
-      if (edge.srcAttr > 0.5) Iterator((edge.dstId, 2.0)) else Iterator((edge.dstId, 0.0))
+    val sendMessage2 = (edge: EdgeTriplet[(Double, Double), Int]) => {
+      if (edge.srcAttr._1 > 0.5) Iterator((edge.dstId, 1.0)) else Iterator((edge.dstId, 0.0))
     }
 
     val messageCombiner2 = (a: Double, b: Double) => {
@@ -70,8 +76,8 @@ object PatternSearch {
       vprog2, sendMessage2, messageCombiner2
     )
 
-    val rec = onefilteredGraph.vertices
-      .filter(_._2 > 3.0).sortBy(_._2, false)
+    val rec = twostepGraph.vertices.sortBy(_._2._2, false)
+//      .filter(_._2._2 > 0.0).sortBy(_._2._2, false)
 
     rec.saveAsTextFile(args.output())
 
