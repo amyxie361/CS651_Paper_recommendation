@@ -42,7 +42,7 @@ object PatternSearch {
       attr + msgSum
     }
     val sendMessage1 = (edge: EdgeTriplet[Double, Int]) => {
-      if (edge.srcAttr > 1.5) Iterator((edge.dstId, edge.srcAttr + 1.0)) else Iterator((edge.dstId, 0.0))
+      if (edge.srcAttr > 0.0) Iterator((edge.dstId, edge.srcAttr + 1.0)) else Iterator((edge.dstId, 0.0))
     }
     val messageCombiner1 = (a: Double, b: Double) => {
       math.max(a, b)
@@ -59,10 +59,7 @@ object PatternSearch {
         }}, onestepGraph.edges)
 
     val vprog2 = (id: VertexId, attr: (Double, Double), msgSum: Double) => {
-      if (attr._1 > 0.0) (attr._1, 3.0)
-      else if (msgSum > 1.0) (attr._1, 2.0)
-      else if (msgSum > 0.0) (attr._1, 1.0)
-      else (attr._1, 0.0)
+      (attr._1, msgSum)
     }
     val sendMessage2 = (edge: EdgeTriplet[(Double, Double), Int]) => {
       if (edge.srcAttr._1 > 0.5) Iterator((edge.dstId, 1.0)) else Iterator((edge.dstId, 0.0))
@@ -76,8 +73,8 @@ object PatternSearch {
       vprog2, sendMessage2, messageCombiner2
     )
 
-    val rec = twostepGraph.vertices.sortBy(_._2._2, false)
-//      .filter(_._2._2 > 0.0).sortBy(_._2._2, false)
+    val rec = twostepGraph.vertices
+      .filter{ case (id, attr) => attr._2 + attr._1 > 2.0}.sortBy(_._2._2, false)
 
     rec.saveAsTextFile(args.output())
 

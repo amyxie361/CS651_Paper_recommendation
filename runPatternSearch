@@ -1,0 +1,10 @@
+#!/bin/bash
+
+spark-submit --class ca.uwaterloo.cs451.patternsearch.PatternSearch \
+        --deploy-mode client \
+        --num-executors 4 --executor-cores 4 --executor-memory 24G --driver-memory 2g \
+        target/paper-rec-1.0.jar \
+        --graph data/tmp-edge-list.csv \
+        --output pattern-recommand \
+        --iter 2 \
+        --paperlist 1 6
