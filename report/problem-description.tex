@@ -1,0 +1,23 @@
+\section{Problem Description}
+%
+We will solve the problem of paper recommendation based on keywords, citation network and user reading history. 
+We will have an offline dataset consisting of paper citation relation and papers' content.
+
+For each query, we have the following as the input and output.
+%
+\paragraph{Input}
+%
+\begin{itemize}
+%
+  \item \textbf{Keywords}: a list of strings where each string is an interested field, e.g. ["machine learning", "computer vision"].
+%
+  \item \textbf{Reading history (optional)}: a list of papers where each paper is represented as a unique id, e.g. ["journals/cacm/Szalay08"].
+%
+\end{itemize}
+%
+\paragraph{Output}
+%
+\begin{itemize}
+  \item \textbf{Recommended papers}: a list of papers in descending recommending order.
+\end{itemize}
+%

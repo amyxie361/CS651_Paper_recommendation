@@ -1,0 +1,42 @@
+\section{Experimental Evaluation}
+%
+Although the focus of this project is to learn a new graph processing framework, we still describe a little bit how we are going to evaluate our proposed solution.
+%
+\subsection{Dataset} \label{dataset}
+%
+We are planning to use the DBLP Computer Science Bibliography dataset, which can be downloaded \href{https://dblp.uni-trier.de/xml/}{\underline{here}}.
+%
+The raw dataset is in XML format, and we will convert it into a graph structure.
+%
+Since our project includes a keyword filtering feature, we are also planning to crawl the paper contents for text processing and analysis.
+%
+For each paper in the DBLP data, a link to the entry page of the paper has been provided.
+%
+We can crawl the contents of the entry page and obtain the abstract as an offline dataset for text processing.
+%
+For the feature that is based on the user reading histories, we plan to use (1) our own reading histories, and (2) synthetic histories.
+%
+\subsection{Methodology}
+%
+The evaluation methodologies for both keyword-filtering and reading-hisotry recommendation features are similar.
+%
+Since evaluating the effectiveness of the recommendations by automatic testing is challenging, one way to evaluate our results is manual evaluation.
+%
+We are going to perform our proposed algorithms on the DBLP dataset described in Section \ref{dataset}.
+%
+For keyword-filtering recommendation, a keyword from a list of randomly generated keywords is going to be an input.
+%
+For reading-history recommendation, a reading list is going to be an input.
+%
+Then, we manually evaluate how relevant the results are to the input keyword or reading history, respectively.
+%
+
+The other way to evaluate our results is based on the number of citations of a paper.
+%
+We can evaluate our results by checking if the recommended papers are popular/important (i.e. large number of citations).
+%
+The recommendations are effective if they are among the most-cited papers.
+
+\subsection{Experimental Results}
+%
+This is result.
