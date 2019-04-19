@@ -16,11 +16,11 @@ We can crawl the contents of the entry page and obtain the abstract as an offlin
 %
 For the feature that is based on the user reading histories, we plan to use (1) our own reading histories, and (2) synthetic histories.
 %
-\subsection{Methodology}
+\subsection{Evaluation Methodology}
 %
 The evaluation methodologies for both keyword-filtering and reading-hisotry recommendation features are similar.
 %
-Since evaluating the effectiveness of the recommendations by automatic testing is challenging, one way to evaluate our results is manual evaluation.
+Since evaluating the effectiveness of the recommendations by automatic testing is challenging, one way to evaluate our results is manual evaluation. In this work, we face the classic cold start problem in recommendation system: there is no good data for interested papers according to keywords or reading history. We will use both manually evaluation and citation rank evaluation for results measuring.
 %
 We are going to perform our proposed algorithms on the DBLP dataset described in Section \ref{dataset}.
 %
@@ -30,12 +30,11 @@ For reading-history recommendation, a reading list is going to be an input.
 %
 Then, we manually evaluate how relevant the results are to the input keyword or reading history, respectively.
 %
+The other way to evaluate our results is based on the number of citations of a paper. The recommendations are effective if they are among the most-cited papers.
+%
+Given a recommendation ranking list $r_1, r_2, ..., r_m$, we crawl their citations $c_1, c_2, ..., c_m$. Then we re-rank the papers according to the citation, from the most to the least. The ranked papers will be $r_{i_1}, r_{i_2},..., r_{i_m}$. Then we count the number of inversion in the new index ranking. We also measure the rank distance: $D(i_1, ..., i_m) = \frac{1}{m} \sum_{j=1}^m |i_j - j|$.
+%
 
-The other way to evaluate our results is based on the number of citations of a paper.
-%
-We can evaluate our results by checking if the recommended papers are popular/important (i.e. large number of citations).
-%
-The recommendations are effective if they are among the most-cited papers.
 
 \subsection{Experimental Results}
 %
