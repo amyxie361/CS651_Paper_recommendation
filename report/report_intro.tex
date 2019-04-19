@@ -1,0 +1,20 @@
+\section{Introduction}
+
+With the rapid publication of scientific literature, conducting a comprehensive literature review has become more challenging. Keeping up with current development of a certain also requires huge effort. However, citation network would help to improve the efficiency and quality when we want to survey on a certain field. Since the citation network is a graph structure, we will explore the new framework \textbf{GraphX}, which makes graph computation easier. The objective of this project is to learn a new framework GraphX and implement network algorithms to accomplish \textbf{paper recommendation}. Our system will recommend users related papers based on input keywords, citation network and reading history. 
+
+We will solve the problem of paper recommendation based on keywords, citation network and user reading history. 
+We will have an offline dataset consisting of paper citation relation and papers' content.
+
+For each query, we have the following as the input and output.
+
+\paragraph{Input}
+\begin{itemize}
+  \item \textbf{Keywords}: a list of strings where each string is an interested field, e.g. ["machine learning", "computer vision"].
+  \item \textbf{Reading history (optional)}: a list of papers where each paper is represented as a unique id, e.g. ["journals/cacm/Szalay08"].
+\end{itemize}
+
+\paragraph{Output}
+\begin{itemize}
+  \item \textbf{Recommended papers}: a list of papers in descending recommending order.
+\end{itemize}
+
