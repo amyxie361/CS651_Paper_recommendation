@@ -1,6 +1,6 @@
 \section{GraphX} \label{sec:framework}
 %
-In this section, we discuss about the big data processing framework for graphs, GraphX, that we use to tackle our problem.
+In this section, we discuss the big data processing framework for graphs, GraphX, that we use to tackle our problem.
 %
 We will highlight some of the features in GraphX and go through some of the essential details of Pregel API.
 %
@@ -36,7 +36,7 @@ Users are required to specify the following functions for a Pregel API call.
 %
 This function runs on every vertex of the graph.
 %
-In this function, each vertex $V$ has the access of the aggreated messsage (see below) delivered to $V$ as well as the attribute of $V$.
+In this function, each vertex $V$ has the access of the aggregated message (see below) delivered to $V$ as well as the attribute of $V$.
 %
 The function returns the new state (i.e. attribute) of the vertex.
 %
@@ -54,7 +54,7 @@ This function combines two messages that are sent to the same vertex in an itera
 %
 The function returns the combined message.
 %
-Because of this aggregation, when a vertex executes the vertex program in the next iteration, only the aggreated message is passed in.
+Because of this aggregation, when a vertex executes the vertex program in the next iteration, only the aggregated message is passed in.
 %
 \end{itemize}
 %

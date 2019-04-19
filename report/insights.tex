@@ -4,6 +4,13 @@ Since the main component of this project consists of learning the framework Grap
 %
 \subsection{Advantages of GraphX}
 %
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.7\linewidth]{edge_cut_vs_vertex_cut.png}
+	\caption{Edge-based partitioning VS Vertex-based partitioning.}
+	\label{fig:edgecut}
+\end{figure}
+
 Since GraphX is built on top of Spark, it adopts a lot of advantages from Spark.
 %
 One of the biggest advantages of GraphX is the easiness of implementation.
@@ -25,11 +32,11 @@ Although this sounds like a disadvantage, this "limitation" helps GraphX improve
 %
 Since in GraphX a graph is an extension of RDD, a graph dataset would be distributed across multiple machines.
 %
-Intuitively, we could partition a graph based on the vertices, for example, by hashing vertex IDs.
+Intuitively, we could partition a graph based on the vertices(Figure \ref{fig:edgecut}(a))\cite{TODO}, for example, by hashing vertex IDs. 
 %
 However, this would cause large communication overhead as a lot of messages need to be sent to across machines, which becomes a bottleneck of the computation.
 %
-Instead, GraphX handles graph partitioning in a edge-based manner.
+Instead, GraphX handles graph partitioning in a edge-based manner (Figure \ref{fig:edgecut}(b)).
 %
 Edges are partitioned onto different machines and vertices are allowed to span on multiple machines.
 %

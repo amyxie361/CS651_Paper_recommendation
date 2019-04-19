@@ -1,6 +1,7 @@
 \section{Introduction}
 %
 With the rapid publication of scientific literature, conducting a comprehensive literature review has become more challenging.
+Hundreds of papers in computer science are published every day.
 %
 Keeping up with current development of a certain area also requires huge effort.
 %
@@ -9,31 +10,25 @@ With limited time and energy, researchers would like to invest their time on the
 However, without any assistance on filtering papers, finding representable papers in a particular field seems impossible.
 
 %
-This is where citation network can be useful.
-%
-A citation network is a network that tells the relationship between papers in terms of references/citations.
-%
+More and more information retrieval method and graph processing method are developed during the past few years. 
+What if we could combine the ability of distributed system with the advanced graph processing algorithms together with the text processing techniques?
+If there is a system that can automatically extract interesting or classic papers to researchers, we can save more time from only manually filtering the papers that we are interested in, based on the title and the abstracts.
+In this project, we proposed a pipeline that could take interested keywords or a list of past read papers as the input and then recommend related papers that the user will be interested in.
+We combined the crawled abstracts of papers with the citation network to help the paper recommendation. We learnt and explore the new framework \textbf{GraphX}, which makes graph computation easy and scalable.
 Since a citation network is in graph structure, we can leverage existing graph data processing framework to help us analyze the importance of each paper.
-%
-This motivates us to learn a graph processing framework and build a system to recommend must-read papers.
-%
-In this project, we explore a new framework \textbf{GraphX}, which makes graph computation easy and scalable.
-%
-The objective of this project is to learn a new framework and implement network algorithms to accomplish \textbf{paper recommendation}.
-%
-The main goal of the system is to recommend users related papers based on input keywords, citation network and reading history.
-%
 
-The rest of the paper is strctured as follows. 
+Our system is able to give interesting results based on both keywords mode and reading history mode. The recommended papers are most classic ones. This could help the researchers to trace back to the most important moment in the history, which is valuable both for new researchers and experienced researchers who need an exhausted literature survey.
+
+The rest of the paper is structured as follows. 
 %
-Section \ref{sec:related-work} reviews related work on recommendation. 
+Section \ref{sec:related-work} reviews related work on recommendation systems. 
 %
-We define the problem that we need to tackle in Section \ref{sec:problem}.
+We define the problem that we need to tackle in Section \ref{sec:problem} and also give the formal notation that we need.
 %
-Section \ref{sec:framework} discusses about the framework we use (i.e. GraphX), and we describe the algorithms we use in GraphX in Section \ref{sec:algo}.
+Section \ref{sec:framework} discusses the framework we explored (i.e. GraphX), and we describe the algorithms we use in GraphX in Section \ref{sec:algo}.
 %
-In Section \ref{sec:insights}, we analyze some of the advantages and disadvantages of GraphX and discuss what we have learned while exploring the framework.
+In Section \ref{sec:insights}, we analyze the advantages and disadvantages of GraphX and discuss what we have learned while exploring the framework.
 %
-We present our experimental results in Section \ref{sec:exp}.
+We present our experimental results in Section \ref{sec:exp} and further analyze them.
 %
 Section \ref{sec:conclusion} states some future work of this project and concludes the paper.
