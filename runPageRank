@@ -3,10 +3,9 @@
 spark-submit --class ca.uwaterloo.cs451.pagerank.PaperRank \
   --deploy-mode client \
   --num-executors 4 --executor-cores 4 --executor-memory 24G --driver-memory 2g \
-#  --conf "spark.local.dir=~/cs651" \
+  --conf "spark.local.dir=~/cs651" \
   target/paper-rec-1.0.jar \
   --graph data/acm-edge-list.csv \
-  --output recommendation-graph \
-  --index data/term2papers.csv
-
-# --keywords graph
+  --output recommendation-deep-learning \
+  --index data/term2papers.csv \
+  --keywords deep,learning
