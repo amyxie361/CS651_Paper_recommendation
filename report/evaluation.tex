@@ -112,3 +112,5 @@ We first check the keywords selection part. After we extract the top 20 keywords
 	\label{res:tfidf}
 \end{table}
 
+Since the most papers we recommended are all ``ancient'' papers. We dig deep into the dataset. Although the dataset was collect until 2016, the most papers are published before 2010. So the fashion topics such as computer vision and natural language processing will not receive a good performance, especially when people prefer more recent papers. Also, the recommended papers tend to be old due to the processing logic. We also applied the reverse directional reading history recommendation, but the test results are not desirable because of the cold start. That is to say, we do not have an actual reading history which can be applied within this dataset. So the pattern mining becomes difficult due to the poor input selection.
+
