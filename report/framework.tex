@@ -4,9 +4,9 @@ In this section, we discuss about the big data processing framework for graphs, 
 %
 \subsection{GraphX}
 %
-We highlight some of the features in GraphX and discuss about the advantages and disadvantages.
+We highlight some of the features in GraphX and go through some of the essential details of Pregel API.
 %
-\subsubsection{Highlights and Pregel API}
+\subsubsection{Highlights}
 %
 GraphX is a component built on top of Spark therefore has adopted many benefits and features from Spark.
 %
@@ -20,7 +20,8 @@ In particular, a graph is represented as VertexRDD and EdgeRDD.
 %
 Since VertexRDD and EdgeRDD are they are simply extensions of RDD, operations that can be applied on RDD can also be applied on them.
 %
-
+\subsubsection{Pregel API}
+%
 In terms of the richness of operators, GraphX provides a set of fundamental operators such as "subgraph," "reverse edges," etc. as well as a few common graph algorithms such as PageRank, ConnectedComponents, etc..
 %
 One feature that we use heavily in GraphX is the Pregel API.
@@ -69,11 +70,11 @@ This is the message passed to every vertex in the first iteration.
 %
 The purpose of this message is to make sure each vertex executes the vertex program at least once.
 %
-\item \textbf{Max iteration} (denoted as $maxIterations$):
+\item \textbf{Max Iteration} (denoted as $maxIterations$):
 %
 This specifies the maximum number of iterations that can be run for a Pregel API call.
 %
-\item \textbf{Edge direction} (denoted as $activeDirection$):
+\item \textbf{Edge Direction} (denoted as $activeDirection$):
 %
 This specifies the direction of the edges on which the $sendMsg$ function will run.
 %
@@ -94,9 +95,28 @@ Note that only those vertices that have incoming messages from previous iteratio
 A message that will be sent would be constructed and delivered at the beginning of next iteration.
 %
 \end{enumerate}
-
-
-\subsubsection{Advantages and Disadvantages}
-- unlike standard Pregel, it limits message passing to neighbors (discuss good and bad about this)
-- If the graph is evolving (new vertex or edges are being added) currently the graph needs to be recreated and hence it is necessary to do checkpointing else in case of node failure recovery time will be a lot.
+%
+We express the execution of a Pregel API call at a high level in Algorithm \ref{alg:pregel}.
+%
+\begin{algorithm} 
+  \SetKwInOut{Input}{Input}
+  \SetKwInOut{Output}{Output}
+  \SetKwInOut{Init}{Init}
+  \Input{Initial Graph: $G = (V, E)$}
+  \Output{Updated Graph: $G = (V, E)$}
+  \SetAlgoLined
+  \SetKwProg{Fn}{Function}{:}{end}
+  \Fn{Pregel(initialMsg, maxIterations, activeDirection, vprog, sendMsg, mergeMsg)}{
+     numIterations := 0 \;
+     initialMsg is sent to each vertex \;
+     \While{\# of vertices that will receive msg > 0 OR numIterations < maxIterations}{
+       vprog(...) // run in parallel on each vertex \;
+       sendMsg(...) // run in parallel on each edge satisfying activeDirection \;
+       mergeMsg(...) // run in parallel on each set of messages sent to the same vertex \;
+     }
+  }
+  \caption{Pregel API}
+  \label{alg:pregel}
+\end{algorithm}
+%
 
