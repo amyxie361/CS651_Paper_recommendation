@@ -1,12 +1,10 @@
-\section{Framework}
+\section{GraphX}
 %
 In this section, we discuss about the big data processing framework for graphs, GraphX, that we use to tackle our problem.
 %
-\subsection{GraphX}
+We will highlight some of the features in GraphX and go through some of the essential details of Pregel API.
 %
-We highlight some of the features in GraphX and go through some of the essential details of Pregel API.
-%
-\subsubsection{Highlights}
+\subsection{Highlights}
 %
 GraphX is a component built on top of Spark therefore has adopted many benefits and features from Spark.
 %
@@ -20,7 +18,7 @@ In particular, a graph is represented as VertexRDD and EdgeRDD.
 %
 Since VertexRDD and EdgeRDD are they are simply extensions of RDD, operations that can be applied on RDD can also be applied on them.
 %
-\subsubsection{Pregel API}
+\subsection{Pregel API}
 %
 In terms of the richness of operators, GraphX provides a set of fundamental operators such as "subgraph," "reverse edges," etc. as well as a few common graph algorithms such as PageRank, ConnectedComponents, etc..
 %
@@ -98,7 +96,7 @@ A message that will be sent would be constructed and delivered at the beginning 
 %
 We express the execution of a Pregel API call at a high level in Algorithm \ref{alg:pregel}.
 %
-\begin{algorithm} 
+\begin{algorithm}
   \SetKwInOut{Input}{Input}
   \SetKwInOut{Output}{Output}
   \SetKwInOut{Init}{Init}
