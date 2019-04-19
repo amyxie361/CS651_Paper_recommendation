@@ -1,5 +1,122 @@
-\section{Framework: GraphX}
-
-
-
+\section{Framework}
+%
+In this section, we discuss about the big data processing framework for graphs, GraphX, that we use to tackle our problem.
+%
+\subsection{GraphX}
+%
+We highlight some of the features in GraphX and go through some of the essential details of Pregel API.
+%
+\subsubsection{Highlights}
+%
+GraphX is a component built on top of Spark therefore has adopted many benefits and features from Spark.
+%
+In Spark, data to be processed is represented as Resilient Distributed Dataset (RDD), which is immutable and distributed.
+%
+In GraphX, graph data is abstracted as a directed graph allowing properties associated with vertices and edges.
+%
+GraphX extends Spark RDD to represent a graph.
+%
+In particular, a graph is represented as VertexRDD and EdgeRDD.
+%
+Since VertexRDD and EdgeRDD are they are simply extensions of RDD, operations that can be applied on RDD can also be applied on them.
+%
+\subsubsection{Pregel API}
+%
+In terms of the richness of operators, GraphX provides a set of fundamental operators such as "subgraph," "reverse edges," etc. as well as a few common graph algorithms such as PageRank, ConnectedComponents, etc..
+%
+One feature that we use heavily in GraphX is the Pregel API.
+%
+Pregel API uses the concept of "thinking like a vertex."
+%
+In other words, the API provides a vertex-centric way of processing graphs.
+%
+Users are required to specify the following functions for a Pregel API call.
+%
+\begin{itemize}
+%
+\item \textbf{Vertex Program} (denoted as $vprog$): 
+%
+This function runs on every vertex of the graph.
+%
+In this function, each vertex $V$ has the access of the aggreated messsage (see below) delivered to $V$ as well as the attribute of $V$.
+%
+The function returns the new state (i.e. attribute) of the vertex.
+%
+\item \textbf{Send Message Program} (denoted as $sendMsg$):
+%
+This function runs on the edges in the EdgeRDD. 
+%
+The input of this function is an edge triplet, which is a view logically joining the vertex and edge properties
+%
+The function returns a message to be sent to the neighbors of each vertex.
+%
+\item \textbf{Merge Message Program} (denoted as $mergeMsg$):
+%
+This function combines two messages that are sent to the same vertex in an iteration into one.
+%
+The function returns the combined message.
+%
+Because of this aggregation, when a vertex executes the vertex program in the next iteration, only the aggreated message is passed in.
+%
+\end{itemize}
+%
+In addition, users need to specify the following parameters.
+%
+\begin{itemize}
+%
+\item \textbf{Initial Message} (denoted as $initialMsg$):
+%
+This is the message passed to every vertex in the first iteration.
+%
+The purpose of this message is to make sure each vertex executes the vertex program at least once.
+%
+\item \textbf{Max Iteration} (denoted as $maxIterations$):
+%
+This specifies the maximum number of iterations that can be run for a Pregel API call.
+%
+\item \textbf{Edge Direction} (denoted as $activeDirection$):
+%
+This specifies the direction of the edges on which the $sendMsg$ function will run.
+%
+\end{itemize}
+%
+As a summary of how Pregel works, there are two major parts of the computation in each iteration.
+%
+\begin{enumerate}
+%
+\item \textbf{Execution of Vertex Program}: 
+%
+On each vertex, the vertex program would be run sequentially.
+%
+Note that only those vertices that have incoming messages from previous iteration will be run.
+%
+\item \textbf{Message Preparation}:
+%
+A message that will be sent would be constructed and delivered at the beginning of next iteration.
+%
+\end{enumerate}
+%
+We express the execution of a Pregel API call at a high level in Algorithm \ref{alg:pregel}.
+%
+\begin{algorithm} 
+  \SetKwInOut{Input}{Input}
+  \SetKwInOut{Output}{Output}
+  \SetKwInOut{Init}{Init}
+  \Input{Initial Graph: $G = (V, E)$}
+  \Output{Updated Graph: $G = (V, E)$}
+  \SetAlgoLined
+  \SetKwProg{Fn}{Function}{:}{end}
+  \Fn{Pregel(initialMsg, maxIterations, activeDirection, vprog, sendMsg, mergeMsg)}{
+     numIterations := 0 \;
+     initialMsg is sent to each vertex \;
+     \While{\# of vertices that will receive msg > 0 OR numIterations < maxIterations}{
+       vprog(...) // run in parallel on each vertex \;
+       sendMsg(...) // run in parallel on each edge satisfying activeDirection \;
+       mergeMsg(...) // run in parallel on each set of messages sent to the same vertex \;
+     }
+  }
+  \caption{Pregel API}
+  \label{alg:pregel}
+\end{algorithm}
+%
 
