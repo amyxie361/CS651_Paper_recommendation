@@ -31,8 +31,8 @@ In other words, the API provides a vertex-centric way of processing graphs.
 Users are required to specify the following functions for a Pregel API call.
 %
 \begin{itemize}
-%
-\item \textbf{Vertex Program} (denoted as $vprog$): 
+
+\item \textbf{Vertex Program} (denoted as $vProg$): 
 %
 This function runs on every vertex of the graph.
 %
@@ -104,13 +104,13 @@ We express the execution of a Pregel API call at a high level in Algorithm \ref{
   \Output{Updated Graph: $G = (V, E)$}
   \SetAlgoLined
   \SetKwProg{Fn}{Function}{:}{end}
-  \Fn{Pregel(initialMsg, maxIterations, activeDirection, vprog, sendMsg, mergeMsg)}{
+  \Fn{\textbf{Pregel}(initialMsg, maxIterations, activeDirection, vProg, sendMsg, mergeMsg)}{
      numIterations := 0 \;
      initialMsg is sent to each vertex \;
-     \While{\# of vertices that will receive msg > 0 OR numIterations < maxIterations}{
-       vprog(...) // run in parallel on each vertex \;
-       sendMsg(...) // run in parallel on each edge satisfying activeDirection \;
-       mergeMsg(...) // run in parallel on each set of messages sent to the same vertex \;
+     \While{\# \{vertices that will receive msg > 0\} AND numIterations $\leq$ maxIterations}{
+       \textbf{vProg}(Vertex, sumMsg) // run in parallel on each vertex \;
+       \textbf{sendMsg}(Edge) // run in parallel on each edge satisfying activeDirection \;
+       \textbf{mergeMsg}(aMsg, bMsg) // run in parallel on each set of messages sent to the same vertex \;
      }
   }
   \caption{Pregel API}

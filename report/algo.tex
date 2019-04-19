@@ -17,7 +17,41 @@ After we get the keywords to papers map, we implement the classic page rank algo
 
 First, according to the keywords from the input, we filter out the subgraphs. Each paper in this subgraph have the target tokens as their keywords. 
 
-Next, we will first use GraphX to construct the citation network.  After we constructed the graph, we will implement the classic PageRank algorithm to establish a paper ranking. {TODO: detailed algorithm in GraphX for Jeremy}
+Next, we will first use GraphX to construct the citation network.  After we constructed the graph, we will implement the classic PageRank algorithm to establish a paper ranking. You can refer to \ref{alg:pagerank} to see detailed GraphX inplementation
+
+\begin{algorithm}
+ \SetKwInOut{Input}{Input}
+ \SetKwInOut{Output}{Output}
+ \SetKwInOut{Init}{Init}
+ \SetKwProg{Fn}{Function}{:}{end}
+ \Input{Keywords list: $K = [k_1, k_2, ..., k_n]$, $G=(V, E)$}
+ \Output{Recommended paper list: $R = [r_1, r_2, ..., r_m]$}
+ %initial
+ \Fn{InitialGraph}{
+ 	JoinVertices\\
+	map(edge.Attr =>$\frac{1}{edge.srcAttr}$)\\
+	map(Vertice => 1.0)
+ }
+\Fn{Filter(Keywords)}{TODO}
+Init.Message $\gets$ 0.0\\
+G $\gets$ \textbf{InitialGraph}.Filter(K)\\
+set resetProb\\
+set numIteration\\
+\Fn{\textbf{vProg}(Vertex, sumMsg)}{
+ 	\Return{resetProb + (1.0 - resetProb) * msgSum}
+ }
+\Fn{\textbf{sendMsg}(Edge)}{
+ 	\Return{edge.srcAttr * edge.Attr}
+ }
+ \Fn{\textbf{mergeMsg}(aMsg, bMsg)}{
+ 	\Return{aMsg + bMsg}
+ }
+ G $\gets$ G.Pregel(initialMsg, maxIteration=numIteration, activateDirection=out, vProg, sendMsg, mergeMsg)\\
+R $\gets$ G.Vertex.SortedBy(Vertex.Attr)\\
+\Return{R}\\
+ \caption{Paper Rank Algorithm}
+ \label{alg:pagerank}
+\end{algorithm}
 
 Then we give recommendation paper list according to the ranking score, from the highest to the lowest.
 
@@ -35,23 +69,45 @@ Because the restrictions from GraphX, we design the algorithm to be a two-iterat
  \SetKwInOut{Input}{Input}
  \SetKwInOut{Output}{Output}
  \SetKwInOut{Init}{Init}
- \Input{Paper list: $P = [p_1, p_2, ..., p_n]$}
+ \SetKwProg{Fn}{Function}{:}{end}
+ \Input{Paper list: $P = [p_1, p_2, ..., p_n]$, $G=(V, E)$}
  \Output{Recommended paper list: $R = [r_1, r_2, ..., r_m]$}
  %initial
-\eIf{Vertex.Id $\in$ P}{Vertex.Attr $\gets$ 1.0}
+ \Fn{\textbf{InitialGraph}(P)}{
+ 	\eIf{Vertex.Id $\in$ P}{Vertex.Attr $\gets$ 1.0}
 	{Vertex.Attr $\gets$ 0.0}
-Init.Message $\gets$ 0.0
-
- \While{not at end of this document}{
-  read current\;
-  \eIf{understand}{
-   go to next section\;
-   current section becomes this one\;
-   }{
-   go back to the beginning of current section\;
-  }
  }
- \caption{How to write algorithms}
+Init.Message $\gets$ 0.0\\
+G $\gets$ InitialGraph(P)\\
+\Fn{\textbf{vProg1}(Vertex, sumMsg)}{
+ 	\Return{Vertex.Attr + sumMsg}
+ }
+\Fn{\textbf{sendMsg1}(Edge)}{
+	\eIf{src.Attr > 0.0}{\Return{2.0}}{
+ 	\Return{0.0}}
+ }
+ \Fn{\textbf{mergeMsg1}(aMsg, bMsg)}{
+ 	\Return{$\max$(aMsg, bMsg)}
+ }
+ G $\gets$ G.Pregel(initialMsg, maxIteration=1, activateDirection=out, vProg1, sendMsg1, mergeMsg1)\\
+ \Fn{\textbf{mapVertex}(Vertex)}{
+ 	\eIf{Vertex.Attr > 1.0}{Vertex.Attr$\gets$(1.0, 0.0)}{Vertex.Attr$\gets$(0.0, 0.0)}
+ }
+G $\gets$ G.mapVertex(mapVertex,Vertex)\\
+\Fn{\textbf{vProg2}(Vertex, sumMsg)}{
+ 	\Return{(Vertex.Attr.\_1, sumMsg)}
+ }
+\Fn{\textbf{sendMsg2}(Edge)}{
+	\eIf{src.Attr.\_1 > 0.0}{\Return{1.0}}{
+ 	\Return{0.0}}
+ }
+ \Fn{\textbf{mergeMsg2}(aMsg, bMsg)}{
+ 	\Return{aMsg + bMsg}
+ }
+ G $\gets$ G.Pregel(initialMsg, maxIteration=1, activateDirection=out, vProg2, sendMsg2, mergeMsg2)\\
+R $\gets$ G.filter(Vertex.Attr.\_1 + Vertex.Attr.\_2 $\geq$ 2.0)\\
+\Return{R}\\
+ \caption{Pattern Mining Algorithm}
  \label{alg:pattern}
 \end{algorithm}
 
