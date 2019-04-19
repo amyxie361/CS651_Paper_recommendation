@@ -26,8 +26,15 @@
 
 \settopmatter{printacmref=false, printccs=false, printfolios=false}
 
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
 \begin{document}
-\title{Paper Recommendation using GraphX}
+\title{Paper Recommendation using GraphX} 
 
 \author{Jeremy Chen}
 \affiliation{%
@@ -52,7 +59,7 @@
 \pagestyle{plain}
 
 
-\begin{abstract}
+\begin{abstract} \blfootnote{Project source code can be downloaded \href{https://github.com/amyxie361/CS651\_Paper\_recommendation}{\underline{here}}}
 Data in graph structure has become popular nowadays.
 %
 Graph processing framework, therefore, becomes an essential tool to perform scalable computation.
@@ -73,7 +80,7 @@ Through doing this project, we have not only studied GraphX in a practical way b
 %
 \end{abstract}
 
-\maketitle
+\maketitle 
 
 \input{introduction}
 \input{related-work}

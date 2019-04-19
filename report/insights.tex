@@ -32,7 +32,7 @@ Although this sounds like a disadvantage, this "limitation" helps GraphX improve
 %
 Since in GraphX a graph is an extension of RDD, a graph dataset would be distributed across multiple machines.
 %
-Intuitively, we could partition a graph based on the vertices(Figure \ref{fig:edgecut}(a))\cite{TODO}, for example, by hashing vertex IDs. 
+Intuitively, we could partition a graph based on the vertices(Figure \ref{fig:edgecut}(a))\cite{Gonzalez:2014:GGP:2685048.2685096}, for example, by hashing vertex IDs. 
 %
 However, this would cause large communication overhead as a lot of messages need to be sent to across machines, which becomes a bottleneck of the computation.
 %
