@@ -3,21 +3,13 @@
 We will solve the problem of paper recommendation based on keywords, citation network and user reading history. 
 We will have an offline dataset consisting of paper citation relation and papers' content.
 
-For each query, we have the following as the input and output.
-%
-\paragraph{Input}
-%
-\begin{itemize}
-%
-  \item \textbf{Keywords}: a list of strings where each string is an interested field, e.g. ["machine learning", "computer vision"].
-%
-  \item \textbf{Reading history (optional)}: a list of papers where each paper is represented as a unique id, e.g. ["journals/cacm/Szalay08"].
-%
-\end{itemize}
-%
-\paragraph{Output}
-%
-\begin{itemize}
-  \item \textbf{Recommended papers}: a list of papers in descending recommending order.
-\end{itemize}
-%
+Next, we will formally states the input and output of our system. We separate the problem into two part: given the interested keywords then the system output a list of recommending papers, or given a list of read papers in user's history then the system output a list of recommended papers. 
+
+\paragraph{First Part}
+
+For the first part, the input will be a list of $n$ strings $K = [k_1, k_2, ..., k_n]$, where each string is an interested field, e.g. ["machine learning", "computer vision"]. The desired paper list will be $R = [r_1, r_2, ..., r_m]$, in the form of indexs of $m$ papers. Our system will recommend papers in an ordered way, which means $r_i$ is a better paper than $r_{i+1}, \forall i$.
+
+\paragraph{Second Part}
+
+For the second part, the input will be a list of papers $P = [p_1, p_2, ..., p_n]$, where each paper is represented as a unique id, e.g. ["journals/cacm/Szalay08"]. This represents user's reading history ignoring the time sequence. The desired paper list will be $R =  [r_1, r_2, ..., r_m]$, in the form of indexs of $m$ papers. Our system will also recommend papers in an ordered way, which means $r_i$ is a better paper than $r_{i+1}, \forall i$.
+
