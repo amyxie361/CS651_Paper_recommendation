@@ -4,17 +4,13 @@ Although the focus of this project is to learn a new graph processing framework,
 %
 \subsection{Dataset} \label{dataset}
 %
-We are planning to use the DBLP Computer Science Bibliography dataset, which can be downloaded \href{https://dblp.uni-trier.de/xml/}{\underline{here}}.
+We use the ACM Citation Network as our graph dataset, which can be downloaded \href{https://aminer.org/citation}{\underline{here}}.
 %
-The raw dataset is in XML format, and we will convert it into a graph structure.
+The raw dataset is in text file, and it includes the information we need such as references of papers, abstracts, etc..
 %
-Since our project includes a keyword filtering feature, we are also planning to crawl the paper contents for text processing and analysis.
+As the raw dataset uses strings as paper unique IDs, we first transform the dataset to have integer IDs starting from 1 to ease our processing.
 %
-For each paper in the DBLP data, a link to the entry page of the paper has been provided.
-%
-We can crawl the contents of the entry page and obtain the abstract as an offline dataset for text processing.
-%
-For the feature that is based on the user reading histories, we plan to use (1) our own reading histories, and (2) synthetic histories.
+We then extract the graph topology (for PageRank and pattern finding algorithms) and the paper abstracts (for TF-IDF) to construct the datasets in our desired format.
 %
 \begin{table*}[ht]
 	\centering
