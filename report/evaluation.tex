@@ -18,7 +18,7 @@ For the feature that is based on the user reading histories, we plan to use (1) 
 %
 \begin{table*}[ht]
 	\centering
-	\begin{tabular}{p{6cm}p{6cm}c}
+	\begin{tabular}{p{7cm}p{7cm}p{3cm}}
 		\toprule
 		\textbf{Input paper}		& \textbf{Recommend Paper Title} 		& \textbf{Recommend Paper Citation} 	\\ \midrule
 		State of the Art in Ultra-Low Power Public Key Cryptography for Wireless Sensor Networks &A method for obtaining digital signatures and public-key cryptosystems	&20024\\
@@ -55,21 +55,27 @@ The other way to evaluate our results is based on the number of citations of a p
 Given a recommendation ranking list $r_1, r_2, ..., r_m$, we crawl their citations $c_1, c_2, ..., c_m$. Then we re-rank the papers according to the citation, from the most to the least. The ranked papers will be $r_{i_1}, r_{i_2},..., r_{i_m}$. Then we count the number of inversion in the new index ranking. We also measure the rank distance: $D(i_1, ..., i_m) = \frac{1}{m} \sum_{j=1}^m |i_j - j|$.
 %
 
-
 \subsection{Experimental Results}
 %
 Because of the cold start problem, we display out results through examples. For the keywords recommendation, we select the top 8 papers to be our recommendation. For the reading history recommendation, we randomly select paper in related field and feed these index to be the input. We select the top 5 papers from pattern to be our recommendation.
 
 \subsubsection{Keywords recommendation results}
 
+Table \ref{res:keywordall}, showed the five queries we sent to our system. We display the inverse counts and the rank scores. We also provide the first recommended paper title and it's citation number. The average inverse counts is 8 while the average rank distance is 1.68. The results are quite interesting. For keywords that have relatively long research history, the recommended paper are pretty good. The top one recommendation of machine learning is a work with up to 33,820 citations. As we all know, the support vector related methods was a heat back to the 90's. 
+
+Here we can take a closer look at the machine learning query's return in Table \ref{res:keywordexp}. The selected papers are almost all classic works with high citations. This is a natural result since we propagate the weights to the citation source. Classic papers will finally receive almost all scores from the later papers. We also examined the papers in the middle of the recommendation list. However, these papers still contain some relatively old papers. The main reason may due to the delay of the ACM dataset. We also manually checked several classic but recent papers from our knowledge, but many them either are not in the original dataset or was discarded because of missing of the abstract. 
 
 \subsubsection{Reading History recommendation results}
+
+Table \ref{res:patternexp} shows an example of recommendation query according to reading history. In the first column are the papers in the reading history, while in the second column are the papers we recommended. The input papers are selected from the cryptography security. The average citations of the input papers is 183.9. We applied the original direction pattern mining. As you can see, the recommended papers are all closely related to cryptography and their citations are all above 1,500, which is much more higher than the input papers.
+
+Table \ref{res:patternall} shows statistics on 5 reading history queries. The inverse count and the rank distance are all low. This means the effectiveness of the pattern mining method.
 
 \begin{table}
 	\centering
 	\begin{tabular}{lccc}
 		\toprule
-		\textbf{Exp ID} 	& \textbf{Inverse count} 	& \textbf{rank score} &\textbf{Top one citation}\\ \midrule
+		\textbf{Exp ID} 	& \textbf{Inverse count} 	& \textbf{Rank distance} &\textbf{Top one citation}\\ \midrule
 		1	& 2	& 0.8		&75881\\
 		2	& 4	& 1.6		& 96 \\
 		3	& 1	& 0.4		&20024 \\
@@ -82,14 +88,17 @@ Because of the cold start problem, we display out results through examples. For 
 	\label{res:patternall}
 \end{table}
 
-
 \subsection{Experimental Analysis}
+
+We can see from the previous results, our system works especially well on mining the classic papers. It can easily find the most popular and ancient papers. This is very important for researchers to find the source and follow the history within a field. Our system may not recommend recent papers. We next analyze the source of these disadvantages.
+
+We first check the keywords selection part. After we extract the top 20 keywords that appears the most in the keywords list, we find an interesting phenomenon. Some common words may appear as keywords frequently, which is not what we expected. You can see from Table \ref{res:tfidf}, the token ``you'' even appear as a keyword in up to 14,912 papers. We then go back to some of these papers. We found that some researchers prefer using ``you'' a lot while the other do not. This leads to the relatively small document frequency of the token while large term frequencies in some papers. This will cause our system not to identify the keywords precisely.
 
 \begin{table}
 	\centering
-	\begin{tabular}{llll}
+	\begin{tabular}{lp{2.5cm}lp{2.5cm}}
 		\toprule
-		\textbf{Token}		& \textbf{\# Appearance as keywords} \textbf{Token}		& \textbf{\# Appearance as keywords} \\ \midrule
+		\textbf{Token}		& \textbf{\# Appearance as keywords} &\textbf{Token}		& \textbf{\# Appearance as keywords} \\ \midrule
 		web	&23293 &service&17037\\
 		image &23082&d&15955\\
 		network &22428&algorithm&15906\\
