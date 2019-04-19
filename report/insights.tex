@@ -1,0 +1,56 @@
+\section{Insights}
+%
+Since the main component of this project consists of learning the framework GraphX, we list some insights and what we have learned whiling exploring it.
+%
+\subsection{Advantages of GraphX}
+%
+Since GraphX is built on top of Spark, it adopts a lot of advantages from Spark.
+%
+One of the biggest advantages of GraphX is the easiness of implementation.
+%
+As the purpose of this project is to learn the framework, we choose not to use the PageRank function provided by GraphX.
+%
+Instead, we implement the PageRank algorithm by ourselves using Pregel API in GraphX.
+%
+However, the setup in order to initiate the execution of PageRank using Pregel only takes approximately 20 lines of code to complete.
+%
+Then, GraphX handles everything else for us, including fault-tolerance, concurrency control, etc..
+%
+
+There is one significant difference between the implementation of Pregel API in GraphX and standard Pregel implementation.
+%
+The Pregel API in GraphX only allows sending messages to the neighbors, whereas standard Pregel implementation can send messages to any vertex in the graph.
+%
+Although this sounds like a disadvantage, this "limitation" helps GraphX improve the efficiency.
+%
+Since in GraphX a graph is an extension of RDD, a graph dataset would be distributed across multiple machines.
+%
+Intuitively, we could partition a graph based on the vertices, for example, by hashing vertex IDs.
+%
+However, this would cause large communication overhead as a lot of messages need to be sent to across machines, which becomes a bottleneck of the computation.
+%
+Instead, GraphX handles graph partitioning in a edge-based manner.
+%
+Edges are partitioned onto different machines and vertices are allowed to span on multiple machines.
+%
+This way, with the "limitation" that messages can only be sent to direct neighbors, we can partition the graph in a way that the communication overhead is very small.
+%
+
+\subsection{Disadvantages of GraphX}
+%
+While implementing algorithms in GraphX, we have also found some disadvantages of the framework.
+%
+First, we are not allowed to have different initial messages of Pregel API in GraphX for different types of vertices.
+%
+This has made the design of our pattern finding algorithm more challenging as we need to think of an initial message that would not mess up the attribute of any vertex.
+%
+The flexbility of initial messages may ease the implementation in some cases.
+%
+Secondly, since GraphX uses Pregel API, which is a synchronous model, the framework may not be the best fit for some algorithms, especially in machine learning and/or data mining.
+%
+In a synchronous model like Pregel, every vertex executes the same iteration.
+%
+That is, in the case that some of the vertices need more time to finish their vertex programs than the others, the entire computation is blocked.
+%
+An asynchronous model can make the computation a lot fast as the most recent information is being used, as opposed to previous iteration.
+%
