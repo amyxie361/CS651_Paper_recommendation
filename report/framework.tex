@@ -107,7 +107,7 @@ We express the execution of a Pregel API call at a high level in Algorithm \ref{
   \Fn{\textbf{Pregel}(initialMsg, maxIterations, activeDirection, vProg, sendMsg, mergeMsg)}{
      numIterations := 0 \;
      initialMsg is sent to each vertex \;
-     \While{\# \{vertices that will receive msg > 0\} AND numIterations $\leq$ maxIterations}{
+     \While{\# vertices that will receive msg > 0 AND numIterations $\leq$ maxIterations}{
        \textbf{vProg}(Vertex, sumMsg) // run in parallel on each vertex \;
        \textbf{sendMsg}(Edge) // run in parallel on each edge satisfying activeDirection \;
        \textbf{mergeMsg}(aMsg, bMsg) // run in parallel on each set of messages sent to the same vertex \;
