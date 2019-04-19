@@ -47,11 +47,11 @@ object PaperRank {
       val keywords = sc.broadcast(args.keywords().split(",").toSet)
       val vIds = term2papers
         .filter(tuple => keywords.value.contains(tuple._1))
-        .map(tuple => ("*", tuple._2))
-        .reduceByKey(_ ::: _)
+        .map(tuple => ("*", tuple._2.toSet))
+        .reduceByKey((paperList1, paperList2) => paperList1.intersect(paperList2))
         .map(_._2)
         .collect()
-      val paperSet = sc.broadcast(vIds(0).toSet)
+      val paperSet = sc.broadcast(vIds(0))
 
       graph = graph.subgraph(vpred = (id, attr) => paperSet.value.contains(id))
     }
