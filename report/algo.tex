@@ -20,6 +20,27 @@ First, according to the keywords from the input, we filter out the subgraphs. Ea
 Next, we will first use GraphX to construct the citation network.  After we constructed the graph, we will implement the classic PageRank algorithm to establish a paper ranking. You can refer to \ref{alg:pagerank} to see detailed GraphX inplementation
 
 \begin{algorithm}
+  \SetKwInOut{Input}{Input}
+  \SetKwInOut{Output}{Output}
+  \SetKw{KwForEach}{foreach}
+  \SetKw{KwIn}{in}
+  \Input{Keywords list: $K = [k_1, k_2, ..., k_n]$, $G=(V, E)$, Term2PapersIndex: $T$ -> \{paper IDs with $T$ as a keyword\}}
+  \Output{Filtered graph: $G=(V, E)$}
+  \SetKwProg{Fn}{Function}{:}{end}
+  \Fn{FilterGraph(Keywords)}{
+    intersectedPaperIds := Intersection( \\
+      Term2PapersIndex[$k_1$], \\
+      Term2PapersIndex[$k_2$], \\
+      ..., \\
+      Term2PapersIndex[$k_n$] \\
+    ) \\
+    return subgraph of G containing IDs in intersectedPaperIds and associated edges
+  }
+  \caption{Keyword Filtering Algorithm}
+  \label{alg:filter}
+\end{algorithm}
+
+\begin{algorithm}
  \SetKwInOut{Input}{Input}
  \SetKwInOut{Output}{Output}
  \SetKwInOut{Init}{Init}
@@ -32,7 +53,6 @@ Next, we will first use GraphX to construct the citation network.  After we cons
 	map(edge.Attr =>$\frac{1}{edge.srcAttr}$)\\
 	map(Vertice => 1.0)
  }
-\Fn{Filter(Keywords)}{TODO}
 Init.Message $\gets$ 0.0\\
 G $\gets$ \textbf{InitialGraph}.Filter(K)\\
 set resetProb\\

@@ -36,6 +36,44 @@ Edges are partitioned onto different machines and vertices are allowed to span o
 This way, with the "limitation" that messages can only be sent to direct neighbors, we can partition the graph in a way that the communication overhead is very small.
 %
 
+\begin{table*}[ht]
+	\centering
+	\begin{tabular}{lccp{6.5cm}c}
+		\toprule
+		\textbf{Keywords}	& \textbf{Inverse count} 	& \textbf{rank score} 	&\textbf{Top one title} &\textbf{Top one citation}\\ \midrule
+		Machine Learning	& 8					& 1.75			&Support-Vector Networks &33820\\
+		Cryptography Security& 5					& 1.125			&State of the Art in Ultra-Low Power Public Key Cryptography for Wireless Sensor Networks &268 \\
+		Distributed System	& 8					& 1.75			&Distributed Systems: Principles and Paradigms & 4038\\
+		Deep Learning		& 11					& 2.25			&Deep learning via semi-supervised embedding &610\\
+		Computer Vision 	& 8					& 1.5				&OpenVIDIA: parallel GPU computer vision & 281\\
+		\bottomrule
+	\end{tabular}
+	\vspace{3mm}
+	\caption{Results for selected keywords recommendation. }
+	\label{res:keywordall}
+\end{table*}
+
+\begin{table*}[ht]
+	\centering
+	\begin{tabular}{lp{12cm}c}
+		\textbf{Keywords}	& Machine Learning \\ \hline
+		\toprule
+		\textbf{Rank}		& \textbf{Paper Title} 		& \textbf{Citation} 	\\ \midrule
+		1				&Support-Vector Networks 	&33820\\
+		2				&Learning with Kernels: Support Vector Machines, Regularization, Optimization, and Beyond &10802\\
+		3				&Machine learning in automated text categorization &9095\\
+		4				&Application of argument based machine learning to law &3\\
+		5				&Data Mining: Practical Machine Learning Tools and Techniques&35014\\
+		6				&Very Simple Classification Rules Perform Well on Most Commonly Used Datasets&2060\\
+		7				&Investigating statistical machine learning as a tool for software development &59\\
+		8				&Machine Learning for User Modeling & 474\\
+		\bottomrule
+	\end{tabular}
+	\vspace{3mm}
+	\caption{An example for keywords recommendation. }
+	\label{res:keywordexp}
+\end{table*}
+
 \subsection{Disadvantages of GraphX}
 %
 While implementing algorithms in GraphX, we have also found some disadvantages of the framework.
