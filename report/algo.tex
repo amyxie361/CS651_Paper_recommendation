@@ -105,7 +105,7 @@ G $\gets$ G.mapVertex(mapVertex,Vertex)\\
  	\Return{aMsg + bMsg}
  }
  G $\gets$ G.Pregel(initialMsg, maxIteration=1, activateDirection=out, vProg2, sendMsg2, mergeMsg2)\\
-R $\gets$ G.filter(Vertex.Attr.\_1 + Vertex.Attr.\_2 $\geq$ 2.0)\\
+R $\gets$ G.Vertiex.filter(Vertex.Attr.\_1 + Vertex.Attr.\_2 $\geq$ 2.0)\\
 \Return{R}\\
  \caption{Pattern Mining Algorithm}
  \label{alg:pattern}
