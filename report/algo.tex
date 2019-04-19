@@ -1,0 +1,20 @@
+\section{Algorithms}
+
+For the separated two parts of programs, we develop our algorithm differently. 
+
+\subsection{Keywords recommendation algorithm}
+
+Before implement recommendation algorithm, we first implemented the TF/IDF algorithm to preprocessing papers' abstracts into their keywords. Then we implemented the classic PageRank algorithm using GraphX for recommendation score computation.
+
+\subsubsection{Preprocessing}
+
+For computation effectiveness, we only keep the abstract of each paper. We first tokenize the abstract, then implemented the TF/IDF algorithm. Now we acquired the TF/IDF score for each 
+The basic idea is to first extract features for each paper, filter the matching papers based on keywords that the user entered, then construct the graph of citation, compute the "paper rank", find frequent patterns, and at last recommend papers to the user.
+
+In details, there are three problems we are going to solve, and we propose an algorithm for each of the problems.
+
+\begin{itemize}
+	\item \textbf{Extracting Features}. We need features that can help to classify the papers according to keywords. Our idea is to implement an algorithm to first compute the TF/IDF and then collect keywords for each paper. We will also take the original author-generated keywords into consideration.
+	\item \textbf{Paper Ranking}. In this stage, we will first use GraphX to construct the citation network. Each node represents a paper while each directed edge represents a citation relation between two papers. After we constructed the graph, we will implement the classic PageRank algorithm to establish a paper ranking. 
+	\item \textbf{Paper Recommendation}. The goal of the project is to recommend papers to researchers according to their interest. There are two main features to represent users' interest. The first will be keywords. We will filter the papers according to the target keywords and construct a subgraph, then compute the paper rank accordingly. The second will be researcher's reading history. We will find common patterns such as diamond pattern to do recommendation. For example, when a user has read paper $A$, and paper $A$ cites both paper $B$ and $C$. Paper $B$ and $C$ both cite paper $D$. Then, we will recommend paper $D$ to the user if the paper has not been read by the user. This is easy to understand because paper $D$ may be an important work in the reader's interested field. We will also consider other interesting patterns according to experiments.
+\end{itemize}
